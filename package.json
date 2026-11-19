@@ -1,0 +1,10 @@
+{
+  "name": "diet-soda-product-page",
+  "version": "1.0.0",
+  "description": "Product landing page with a 3D can, flavor switcher, and order and contact dialogs.",
+  "private": true,
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": ["gsap", "model-viewer", "3d", "product-page", "landing-page"]
+}

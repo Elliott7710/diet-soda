@@ -1,0 +1,1990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diet Soda | Pure Zero Refreshment</title>
+    <meta name="description" content="Experience the crisp, clean taste of Diet Soda. Zero sugar, zero compromise.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;500&family=Manrope:wght@400;700&family=Galada&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #ffffff;
+            --accent-color: #ffffff;
+            --muted-color: rgba(255, 255, 255, 0.7);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --font-main: 'Inter', sans-serif;
+            --font-heading: 'Galada', cursive;
+            --bg-inner: #0b8a78;
+            --bg-mid: #044e3b;
+            --bg-outer: #011411;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: auto;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: radial-gradient(circle at center, var(--bg-inner) 0%, var(--bg-mid) 50%, var(--bg-outer) 100%);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: auto;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+            transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.blue-theme {
+            --bg-inner: #0b4f8a;
+            --bg-mid: #04294e;
+            --bg-outer: #010c14;
+        }
+
+        #bubbles-container {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bubble-img {
+            position: absolute;
+            pointer-events: none;
+        }
+
+        @keyframes floatUpImg {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+            10%, 90% { opacity: 0.4; }
+            100% { transform: translateY(-110vh) translateX(30px) rotate(360deg); opacity: 0; }
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 4%;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(3, 15, 14, 0.42);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+            font-family: var(--font-heading);
+        }
+
+        .nav {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--glass-bg);
+            padding: 0.4rem;
+            border-radius: 100px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .nav.glass {
+            position: relative;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .nav-item {
+            font-family: 'Manrope', sans-serif;
+            color: var(--muted-color);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.5rem 1.2rem;
+            border-radius: 100px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: #fbcfe8;
+            color: #011d17;
+        }
+
+        .contact-btn {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 0.9rem 2rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: none;
+        }
+
+        .contact-btn:hover {
+            background: rgba(0, 0, 0, 0.7);
+            transform: translateY(-2px);
+            box-shadow: none;
+        }
+
+        .hero {
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            min-height: 100vh;
+            min-height: 100svh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4%;
+            padding-top: 5rem;
+        }
+
+        .hero-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            width: 100%;
+            max-width: 100%;
+            padding: 0;
+            min-height: calc(100vh - 5rem);
+            min-height: calc(100svh - 5rem);
+            position: relative;
+        }
+
+        .main-title,
+        .side-title {
+            font-family: var(--font-heading);
+            font-size: clamp(5rem, 10vw, 12rem);
+            line-height: 0.8;
+            font-weight: 400;
+            text-transform: none;
+            white-space: nowrap;
+            color: white;
+            letter-spacing: normal;
+        }
+
+        .outline { color: var(--text-color); }
+
+        .leaves-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            transition: transform 0.1s ease-out;
+        }
+
+        .leaf {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            pointer-events: none;
+            z-index: -1;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+        }
+
+        .l1 { top: 10%; left: 15%; }
+        .l2 { top: 40%; left: 80%; width: 140px; height: 140px; opacity: 0.4; }
+        .l3 { top: 70%; left: 75%; width: 80px; height: 80px; }
+        .l4 { top: 85%; left: 20%; width: 120px; height: 120px; opacity: 0.3; }
+
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 6rem 0;
+            gap: 2rem;
+            z-index: 100;
+        }
+
+        @keyframes fadeInEntry {
+            to { opacity: 1; transform: none; }
+        }
+
+        .description {
+            color: var(--muted-color);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 400px;
+        }
+
+        .primary-btn {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 0.4rem 0.4rem 0.4rem 1.5rem;
+            border-radius: 100px;
+            font-weight: 700;
+            cursor: pointer;
+            width: fit-content;
+            transition: all 0.3s ease;
+            box-shadow: none;
+        }
+
+        .primary-btn:hover {
+            background: rgba(0, 0, 0, 0.7);
+            transform: translateY(-3px);
+            box-shadow: none;
+        }
+
+        .plus-icon {
+            background: #fbcfe8;
+            color: #011d17;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.4rem;
+            font-weight: 900;
+            line-height: 1;
+            padding-bottom: 2px;
+            border: none;
+        }
+
+        .award-badge {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: auto;
+        }
+
+        .award-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .award-text { display: flex; flex-direction: column; }
+        .award-title { font-size: 0.7rem; letter-spacing: 0.1em; color: var(--muted-color); }
+        .award-subtitle { font-size: 0.85rem; font-weight: 600; }
+
+        .berries-container-bg,
+        .berries-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            transition: transform 0.1s ease-out;
+        }
+
+        .berries-container-bg { z-index: 0; }
+        .berries-container { z-index: 110; }
+
+        .berry {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            outline: none;
+            --progress-bar-color: transparent;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .berry.no-animation { animation: none !important; }
+        .b1 { top: 25%; left: 30%; width: 220px; height: 220px; }
+        .b2 { top: 60%; left: 42%; width: 100px; height: 100px; }
+        .b3 { top: 30%; left: 62%; width: 250px; height: 250px; }
+        .b4 { top: 15%; left: 48%; width: 140px; height: 140px; }
+        .b5 { top: 75%; left: 20%; width: 120px; height: 120px; }
+        .b6 { top: 45%; left: 75%; width: 180px; height: 180px; }
+        .b7 { top: 15%; left: 40%; width: 80px; height: 80px; opacity: 0.7; }
+        .b8 { top: 50%; left: 55%; width: 70px; height: 70px; opacity: 0.6; }
+        .b9 { top: 80%; left: 35%; width: 75px; height: 75px; opacity: 0.7; }
+
+        .hero-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 0.3s forwards, float 6s ease-in-out infinite;
+            pointer-events: none;
+            background: radial-gradient(circle at center, rgba(16, 185, 129, 0.12) 0%, transparent 70%);
+        }
+
+        body.blue-theme .hero-center {
+            background: radial-gradient(circle at center, rgba(14, 165, 233, 0.12) 0%, transparent 70%);
+        }
+
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .main-product-3d {
+            width: 80vw;
+            height: 80vh;
+            outline: none;
+            --progress-bar-color: transparent;
+            --poster-color: transparent;
+            z-index: 1;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(25deg);
+            pointer-events: none;
+        }
+
+        .main-product-3d[camera-controls] { pointer-events: auto; }
+
+        .hero-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+            text-align: right;
+            height: 100%;
+            padding: 6rem 0;
+            z-index: 100;
+            width: 450px;
+            pointer-events: none;
+        }
+
+        @keyframes fadeInLeft {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .product-carousel {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: flex-end;
+            pointer-events: auto;
+        }
+
+        .carousel-cards { display: flex; gap: 1rem; }
+
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 1rem;
+            padding-top: 5rem;
+            border-radius: 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 135px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .card.active {
+            border-color: #fbcfe8;
+            border-width: 1px;
+            background: var(--glass-bg);
+            box-shadow: none;
+        }
+
+        .card img {
+            width: 140px;
+            height: auto;
+            margin-top: -8rem;
+            filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.5));
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+            display: block;
+            will-change: transform;
+            pointer-events: none;
+        }
+
+        .card:hover img { transform: translateY(-30px) rotate(-12deg) scale(1.15) !important; }
+
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            font-size: 0.7rem;
+            width: 100%;
+            word-wrap: break-word;
+        }
+
+        .card-info span:first-child { font-weight: 600; }
+        .card-info span:last-child { color: var(--muted-color); }
+        .carousel-nav { display: flex; gap: 1rem; }
+
+        .nav-arrow {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .nav-arrow:hover { background: rgba(255, 255, 255, 0.1); }
+        .side-title { align-self: flex-end; text-align: right; }
+
+        @keyframes shine {
+            from { transform: translateX(-100%) rotate(45deg); }
+            to { transform: translateX(200%) rotate(45deg); }
+        }
+
+        @media (max-width: 1200px) {
+            .main-product-3d { width: 100vw; height: 60vh; top: 40%; }
+            .hero-content { padding-top: 8rem; }
+            .hero-center { order: -1; }
+            .main-title, .side-title { font-size: 5rem; }
+            .hero-right { width: auto; max-width: 380px; align-items: center; text-align: center; }
+            .side-title { align-self: center; text-align: center; }
+        }
+
+        @media (max-width: 760px) {
+            .header { padding: 1.2rem 5%; }
+            .nav { gap: 0; padding: 0.25rem; }
+            .nav-item { font-size: 0.65rem; padding: 0.45rem 0.55rem; }
+            .contact-btn { padding: 0.7rem 0.9rem; font-size: 0.7rem; }
+            .logo { font-size: 1rem; gap: 0.3rem; }
+            .logo svg { width: 25px; height: 25px; }
+            .hero { padding: 4.5rem 5% 0; }
+            .hero-content { align-items: flex-start; min-height: calc(100svh - 4.5rem); padding-top: 0; }
+            .hero-left {
+                padding: 5rem 0 1.5rem;
+                gap: 1.2rem;
+                height: auto;
+                max-width: 48%;
+            }
+            .main-title, .side-title { font-size: clamp(3.2rem, 12vw, 5rem); }
+            .description { font-size: 0.8rem; line-height: 1.5; }
+            .description br { display: none; }
+            .primary-btn { gap: 0.75rem; padding-left: 1rem; font-size: 0.8rem; }
+            .plus-icon { width: 32px; height: 32px; }
+            .award-badge { gap: 0.6rem; }
+            .award-icon { width: 38px; height: 38px; }
+            .award-title { font-size: 0.55rem; }
+            .award-subtitle { font-size: 0.65rem; }
+            .hero-right {
+                width: auto;
+                padding: 5rem 0 1.5rem;
+                height: auto;
+                justify-content: flex-start;
+                gap: 2rem;
+            }
+            .product-carousel { gap: 0.8rem; }
+            .carousel-cards { gap: 0.5rem; }
+            .card { width: 92px; padding: 3.5rem 0.45rem 0.7rem; gap: 0.6rem; border-radius: 20px; }
+            .card img { width: 95px; margin-top: -5.3rem; }
+            .card-info { font-size: 0.62rem; }
+            .carousel-nav { gap: 0.6rem; }
+            .nav-arrow { width: 30px; height: 30px; }
+            .side-title { white-space: normal; font-size: clamp(2.5rem, 9vw, 4rem); }
+            .main-product-3d { width: 100vw; height: 54vh; top: 48%; }
+            .b1 { left: 18%; }
+            .b3 { left: 56%; }
+            .b6 { left: 70%; }
+            .hero { min-height: 100svh; }
+        }
+
+        @media (max-width: 420px) {
+            .header {
+                display: grid;
+                grid-template-columns: 1fr auto;
+                row-gap: 0.55rem;
+                padding: 0.7rem 5%;
+            }
+            .logo { grid-column: 1; grid-row: 1; }
+            .contact-btn { grid-column: 2; grid-row: 1; white-space: nowrap; }
+            .nav {
+                grid-column: 1 / -1;
+                grid-row: 2;
+                justify-self: center;
+                max-width: 100%;
+                overflow-x: auto;
+            }
+            .nav-item { padding: 0.4rem; font-size: 0.58rem; }
+            .contact-btn { padding: 0.65rem 0.7rem; }
+            .hero-left { max-width: 47%; }
+            .card { width: 78px; }
+            .card img { width: 82px; }
+            .card-info { font-size: 0.57rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html, body { scroll-behavior: auto !important; }
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .content-section,
+        .site-footer {
+            position: relative;
+            z-index: 10;
+        }
+
+        .content-section {
+            width: min(1120px, calc(100% - 8%));
+            margin: 0 auto;
+            padding: 7rem 0;
+            scroll-margin-top: 6rem;
+        }
+
+        .section-heading {
+            max-width: 720px;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-eyebrow {
+            color: #fbcfe8;
+            font: 600 0.72rem/1.4 'Manrope', sans-serif;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font: 400 clamp(3.2rem, 7vw, 6.5rem)/0.95 var(--font-heading);
+            letter-spacing: normal;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle,
+        .section-copy {
+            color: var(--muted-color);
+            line-height: 1.75;
+            max-width: 620px;
+        }
+
+        .glass-panel,
+        .ingredient-card,
+        .stat-card,
+        .review-card,
+        .nutrition-pill {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .ingredient-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .ingredient-card {
+            min-height: 210px;
+            border-radius: 24px;
+            padding: 1.5rem;
+        }
+
+        .ingredient-index {
+            color: #fbcfe8;
+            font: 600 0.75rem 'Manrope', sans-serif;
+            letter-spacing: 0.12em;
+        }
+
+        .ingredient-card h3 {
+            font: 400 1.8rem/1.05 var(--font-heading);
+            margin: 1.6rem 0 0.7rem;
+        }
+
+        .ingredient-card p {
+            color: var(--muted-color);
+            font-size: 0.88rem;
+            line-height: 1.65;
+        }
+
+        .nutrition-bar {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .nutrition-pill {
+            border-radius: 999px;
+            padding: 1rem 1.3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nutrition-pill strong { color: #fbcfe8; font-size: 1.05rem; }
+        .nutrition-pill span { color: var(--muted-color); font-size: 0.78rem; }
+
+        .taste-layout {
+            display: grid;
+            grid-template-columns: 0.95fr 1.05fr;
+            gap: 1rem;
+        }
+
+        .taste-copy,
+        .taste-meters {
+            border-radius: 28px;
+            padding: clamp(1.5rem, 4vw, 3rem);
+        }
+
+        .taste-copy h3 {
+            color: #fbcfe8;
+            font: 400 2.5rem/1 var(--font-heading);
+            margin-bottom: 1rem;
+        }
+
+        .taste-copy p { color: var(--muted-color); line-height: 1.75; }
+
+        .flavor-toggle,
+        .modal-pills,
+        .footer-flavors {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .flavor-toggle { margin-top: 1.7rem; }
+
+        .pill-button {
+            border: 1px solid var(--glass-border);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.06);
+            color: white;
+            padding: 0.75rem 1rem;
+            font: 500 0.78rem 'Manrope', sans-serif;
+            cursor: pointer;
+            transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+        }
+
+        .pill-button:hover,
+        .pill-button[aria-pressed="true"] {
+            background: #fbcfe8;
+            border-color: #fbcfe8;
+            color: #011d17;
+        }
+
+        .meter-list { display: grid; gap: 1.6rem; }
+
+        .meter-heading {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.6rem;
+            font-size: 0.88rem;
+        }
+
+        .meter-heading span:last-child { color: #fbcfe8; font-variant-numeric: tabular-nums; }
+
+        .meter-track {
+            height: 9px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .meter-fill {
+            width: 0;
+            height: 100%;
+            display: block;
+            border-radius: inherit;
+            background: #fbcfe8;
+            box-shadow: 0 0 18px rgba(251, 207, 232, 0.3);
+        }
+
+        .eco-banner {
+            border-radius: 32px;
+            padding: clamp(1.5rem, 5vw, 4rem);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .eco-banner::after {
+            content: "";
+            position: absolute;
+            pointer-events: none;
+            inset: -100% auto -100% -40%;
+            width: 24%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+            transform: translateX(-100%) rotate(20deg);
+            opacity: 0;
+        }
+
+        .eco-banner:hover::after {
+            opacity: 1;
+            animation: shine 1.2s ease forwards;
+        }
+
+        .eco-intro {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .eco-intro .section-title { margin-bottom: 0; }
+        .eco-intro .section-copy { max-width: 360px; }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .stat-card {
+            min-height: 185px;
+            border-radius: 24px;
+            padding: 1.5rem;
+        }
+
+        .stat-card strong {
+            display: block;
+            color: #fbcfe8;
+            font: 400 clamp(3rem, 6vw, 5.2rem)/1 var(--font-heading);
+            margin-bottom: 0.8rem;
+        }
+
+        .stat-card span { color: var(--muted-color); line-height: 1.5; }
+
+        .reviews-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 2rem;
+        }
+
+        .reviews-heading .section-heading { margin-bottom: 2.5rem; }
+
+        .review-summary {
+            margin-bottom: 2.5rem;
+            padding: 0.85rem 1.1rem;
+            border-radius: 16px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .review-summary strong { color: #fbcfe8; font-size: 1.25rem; }
+        .review-summary span { color: var(--muted-color); font-size: 0.8rem; }
+
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .review-card {
+            border-radius: 24px;
+            padding: 1.5rem;
+            min-height: 245px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .review-stars { color: #fbcfe8; letter-spacing: 0.15em; }
+
+        .review-flavor {
+            color: #fbcfe8;
+            font: 600 0.68rem 'Manrope', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin: 1rem 0 0.7rem;
+        }
+
+        .review-quote { color: var(--muted-color); line-height: 1.65; }
+
+        .reviewer {
+            margin-top: auto;
+            padding-top: 1.5rem;
+            font-size: 0.86rem;
+            font-weight: 600;
+        }
+
+        .reviewer span { color: var(--muted-color); font-weight: 400; }
+
+        .site-footer {
+            border-top: 1px solid var(--glass-border);
+            background: rgba(3, 12, 12, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 2rem 4%;
+        }
+
+        .footer-inner {
+            width: min(1120px, 100%);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .footer-brand { display: flex; align-items: center; gap: 0.6rem; }
+        .footer-brand .logo { font-size: 1.5rem; }
+        .footer-brand svg { width: 28px; height: 28px; }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--muted-color);
+            text-decoration: none;
+            font: 500 0.76rem 'Manrope', sans-serif;
+        }
+
+        .footer-links a:hover { color: #fbcfe8; }
+        .footer-actions { display: grid; justify-items: end; gap: 0.8rem; }
+        .footer-flavors { justify-content: flex-end; }
+        .footer-flavors .pill-button { padding: 0.55rem 0.8rem; font-size: 0.7rem; }
+        .copyright { color: var(--muted-color); font-size: 0.7rem; text-align: right; }
+
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 250;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: rgba(0, 8, 8, 0.68);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .modal-backdrop.is-open { display: flex; }
+
+        .modal-card {
+            width: min(520px, 100%);
+            max-height: min(88vh, 820px);
+            overflow-y: auto;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 28px;
+            background: rgba(7, 20, 19, 0.92);
+            box-shadow: 0 30px 100px rgba(0, 0, 0, 0.45);
+            padding: clamp(1.4rem, 5vw, 2.2rem);
+        }
+
+        .modal-card h2 {
+            font: 400 2.8rem/1 var(--font-heading);
+            margin: 0 2.5rem 0.6rem 0;
+        }
+
+        .modal-intro { color: var(--muted-color); line-height: 1.6; margin-bottom: 1.5rem; }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            color: white;
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+
+        .modal-label {
+            display: block;
+            color: var(--muted-color);
+            font: 600 0.7rem 'Manrope', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin: 1.25rem 0 0.65rem;
+        }
+
+        .modal-pills .pill-button { flex: 1; min-width: 115px; }
+        .pack-option {
+            flex: 1;
+            min-width: 130px;
+            position: relative;
+        }
+
+        .pack-option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .pack-option span {
+            display: block;
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            border-radius: 16px;
+            padding: 0.85rem;
+            color: white;
+            cursor: pointer;
+            line-height: 1.5;
+            font-size: 0.78rem;
+        }
+
+        .pack-option input:checked + span {
+            border-color: #fbcfe8;
+            box-shadow: inset 0 0 0 1px #fbcfe8;
+        }
+
+        .pack-option input:focus-visible + span { outline: 2px solid #fbcfe8; outline-offset: 3px; }
+        .pack-option strong { display: block; color: #fbcfe8; font-size: 0.95rem; }
+
+        .quantity-row,
+        .modal-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.4rem;
+        }
+
+        .quantity-control {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.3rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 999px;
+        }
+
+        .quantity-control button {
+            border: 0;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            color: white;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .modal-total { border-top: 1px solid var(--glass-border); padding-top: 1.2rem; }
+        .modal-total strong { color: #fbcfe8; font-size: 1.3rem; }
+
+        .modal-primary {
+            width: 100%;
+            border: 0;
+            border-radius: 999px;
+            background: #fbcfe8;
+            color: #011d17;
+            padding: 1rem 1.2rem;
+            margin-top: 1.4rem;
+            font: 700 0.9rem 'Manrope', sans-serif;
+            cursor: pointer;
+        }
+
+        .modal-primary:hover { filter: brightness(1.05); }
+        .confirmation-view { text-align: center; padding: 1.5rem 0 0.5rem; }
+        .confirmation-view p { color: var(--muted-color); line-height: 1.7; margin-top: 1rem; }
+
+        .contact-form label {
+            display: block;
+            color: var(--muted-color);
+            font-size: 0.78rem;
+            margin: 1rem 0 0.45rem;
+        }
+
+        .contact-form input,
+        .contact-form select,
+        .contact-form textarea {
+            width: 100%;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 0.85rem 0.9rem;
+            background: rgba(255, 255, 255, 0.06);
+            color: white;
+            font: 400 0.9rem var(--font-main);
+        }
+
+        .contact-form select option { color: #111; }
+        .contact-form textarea { min-height: 110px; resize: vertical; }
+        .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus {
+            outline: 2px solid rgba(251, 207, 232, 0.7);
+            outline-offset: 2px;
+        }
+
+        .form-error { color: #fbcfe8; min-height: 1.2rem; margin-top: 0.6rem; font-size: 0.78rem; }
+
+        @media (max-width: 900px) {
+            .ingredient-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .footer-inner { grid-template-columns: 1fr 1fr; }
+            .footer-links { order: 3; grid-column: 1 / -1; }
+        }
+
+        @media (max-width: 760px) {
+            .content-section { width: 90%; padding: 4.5rem 0; scroll-margin-top: 5rem; }
+            .section-heading { margin-bottom: 1.7rem; }
+            .section-title { font-size: clamp(3rem, 13vw, 4.8rem); }
+            .ingredient-grid,
+            .nutrition-bar,
+            .taste-layout,
+            .stat-grid,
+            .review-grid { grid-template-columns: 1fr; }
+            .ingredient-card { min-height: auto; }
+            .ingredient-card h3 { margin-top: 1rem; }
+            .nutrition-pill { padding: 0.8rem 1rem; }
+            .taste-copy, .taste-meters { padding: 1.4rem; }
+            .eco-intro, .reviews-heading { display: block; }
+            .eco-intro .section-copy { margin-top: 1rem; }
+            .stat-card { min-height: auto; }
+            .review-summary { margin-top: -1rem; }
+            .site-footer { padding: 1.5rem 5%; }
+            .footer-inner { grid-template-columns: 1fr; justify-items: center; gap: 1.2rem; }
+            .footer-links { grid-column: auto; order: initial; gap: 0.8rem; }
+            .footer-actions { justify-items: center; }
+            .footer-flavors { justify-content: center; }
+            .copyright { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <div id="bubbles-container"></div>
+
+    <header class="header">
+        <div class="logo">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle>
+                <path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            </svg>
+            <span>Soda</span>
+        </div>
+        <nav class="nav glass" aria-label="Main navigation">
+            <a href="#home" class="nav-item active">Home</a>
+            <a href="#ingredients" class="nav-item">Ingredients</a>
+            <a href="#taste" class="nav-item">Taste</a>
+            <a href="#eco" class="nav-item">Eco</a>
+            <a href="#reviews" class="nav-item">Reviews</a>
+        </nav>
+        <button class="contact-btn" type="button" data-open-modal="contact-modal">Contact Us</button>
+    </header>
+
+    <main class="hero" id="home">
+        <div class="hero-content">
+            <div class="leaves-container" aria-hidden="true">
+                <model-viewer class="leaf l1" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="45deg 75deg 105%"></model-viewer>
+                <model-viewer class="leaf l2" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="-30deg 60deg 105%"></model-viewer>
+                <model-viewer class="leaf l3" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="120deg 85deg 105%"></model-viewer>
+                <model-viewer class="leaf l4" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="10deg 45deg 105%"></model-viewer>
+            </div>
+
+            <div class="hero-left">
+                <h1 class="main-title large-animation-1"><span class="outline">Pure</span><br>Zero</h1>
+                <p class="description">
+                    Unleash the crisp taste of zero sugar. <br>
+                    Refreshment redefined in every bubble — <br>
+                    all in one sleek design.
+                </p>
+                <div class="cta-group">
+                    <button class="primary-btn" type="button" data-open-modal="order-modal">Shop Now<span class="plus-icon" aria-hidden="true">+</span></button>
+                </div>
+                <div class="award-badge">
+                    <div class="award-icon" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 15L15 18L19 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </div>
+                    <div class="award-text">
+                        <span class="award-title">DESIGN AWARDS</span>
+                        <span class="award-subtitle">PREMIUM BEVERAGE 2025</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="berries-container-bg" aria-hidden="true">
+                <model-viewer class="berry b7" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="-20deg 110deg 105%"></model-viewer>
+                <model-viewer class="berry b8" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="160deg 45deg 105%"></model-viewer>
+                <model-viewer class="berry b9" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="45deg 20deg 105%"></model-viewer>
+            </div>
+
+            <div class="hero-center">
+                <model-viewer id="product-model" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/deit_soda2.glb" alt="Diet Soda 3D Model" camera-controls
+                    disable-zoom shadow-intensity="0" environment-image="neutral" exposure="1.5"
+                    interaction-prompt="none" camera-orbit="0deg 90deg 380%" field-of-view="30deg"
+                    class="main-product-3d">
+                </model-viewer>
+            </div>
+
+            <div class="berries-container" aria-hidden="true">
+                <model-viewer class="berry b1" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="45deg 120deg 105%"></model-viewer>
+                <model-viewer class="berry b2" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="-120deg 45deg 105%"></model-viewer>
+                <model-viewer class="berry b3" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="200deg 90deg 105%"></model-viewer>
+                <model-viewer class="berry b4" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="10deg 20deg 105%"></model-viewer>
+                <model-viewer class="berry b5" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="-45deg 160deg 105%"></model-viewer>
+                <model-viewer class="berry b6" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="80deg 75deg 105%"></model-viewer>
+            </div>
+
+            <div class="hero-right">
+                <div class="product-carousel">
+                    <div class="carousel-cards">
+                        <div class="card active" data-flavor="classic" role="button" tabindex="0" aria-pressed="true">
+                            <img src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/Green%20Soda.png" alt="Diet Classic">
+                            <div class="card-info"><span>Diet Classic</span><span>$2.99</span></div>
+                        </div>
+                        <div class="card" data-flavor="blue" role="button" tabindex="0" aria-pressed="false">
+                            <img src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/Blue%20Soda.png" alt="Zero Lime" style="filter: brightness(0.7);">
+                            <div class="card-info"><span>Zero Lime</span><span>$2.99</span></div>
+                        </div>
+                    </div>
+                    <div class="carousel-nav">
+                        <button class="nav-arrow" type="button" aria-label="Previous flavor">←</button>
+                        <button class="nav-arrow" type="button" aria-label="Next flavor">→</button>
+                    </div>
+                </div>
+                <h2 class="side-title large-animation-1"><span class="outline">Refreshingly</span><br>Clean</h2>
+            </div>
+        </div>
+    </main>
+
+    <section class="content-section" id="ingredients" aria-labelledby="ingredients-title">
+        <div class="section-heading reveal">
+            <p class="section-eyebrow">WHAT GOES IN — AND WHAT DOESN'T</p>
+            <h2 class="section-title" id="ingredients-title">Pure Botanicals,<br>Zero Sugar</h2>
+            <p class="section-subtitle">A clean, considered blend built around bright flavor, sparkling refreshment, and nothing extra.</p>
+        </div>
+        <div class="ingredient-grid">
+            <article class="ingredient-card reveal">
+                <span class="ingredient-index">01 / THE BASE</span>
+                <h3>Triple-Filtered Sparkling Water</h3>
+                <p>A crisp micro-carbonated mineral base for a lively, fine-bubble finish.</p>
+            </article>
+            <article class="ingredient-card reveal">
+                <span class="ingredient-index">02 / THE SIGNATURE</span>
+                <h3>Active Flavor Extract</h3>
+                <p><span id="active-flavor-extract">Wild Cherry Essence</span>, bright botanicals that make every sip distinct.</p>
+            </article>
+            <article class="ingredient-card reveal">
+                <span class="ingredient-index">03 / THE SWEETNESS</span>
+                <h3>Organic Stevia &amp; Monk Fruit</h3>
+                <p>Plant-based sweetness with a clean finish and zero glycemic impact.</p>
+            </article>
+            <article class="ingredient-card reveal">
+                <span class="ingredient-index">04 / THE FINISH</span>
+                <h3>Electrolyte Trace Minerals</h3>
+                <p>Thoughtful trace minerals for a refreshing finish with zero sodium spike.</p>
+            </article>
+        </div>
+        <div class="nutrition-bar reveal" aria-label="Nutrition highlights">
+            <div class="nutrition-pill"><strong>0 kcal</strong><span>Energy</span></div>
+            <div class="nutrition-pill"><strong>0g</strong><span>Sugar</span></div>
+            <div class="nutrition-pill"><strong>0g</strong><span>Net Carbs</span></div>
+            <div class="nutrition-pill"><strong>100%</strong><span>Natural</span></div>
+        </div>
+    </section>
+
+    <section class="content-section" id="taste" aria-labelledby="taste-title">
+        <div class="section-heading reveal">
+            <p class="section-eyebrow">A LITTLE SCIENCE. A LOT OF CRISP.</p>
+            <h2 class="section-title" id="taste-title">Crispness Measured</h2>
+            <p class="section-subtitle">Two bright flavor profiles, tuned for the clean snap that keeps you coming back.</p>
+        </div>
+        <div class="taste-layout">
+            <article class="taste-copy glass-panel reveal">
+                <p class="section-eyebrow">NOW POURING</p>
+                <h3 id="taste-flavor-name">Diet Classic</h3>
+                <p id="taste-flavor-copy">Wild cherry leads with a juicy lift, followed by fine sparkling bubbles and a clean, lightly tart finish.</p>
+                <div class="flavor-toggle" aria-label="Choose a flavor">
+                    <button class="pill-button flavor-action" type="button" data-flavor="blue">Switch to Zero Lime</button>
+                </div>
+            </article>
+            <article class="taste-meters glass-panel reveal" aria-label="Flavor profile">
+                <div class="meter-list">
+                    <div class="meter" data-meter="crisp">
+                        <div class="meter-heading"><span>Crisp Carbonation</span><span class="meter-value">95%</span></div>
+                        <div class="meter-track"><span class="meter-fill" data-value-classic="95" data-value-blue="98"></span></div>
+                    </div>
+                    <div class="meter" data-meter="aroma">
+                        <div class="meter-heading"><span>Botanical Aroma</span><span class="meter-value">90%</span></div>
+                        <div class="meter-track"><span class="meter-fill" data-value-classic="90" data-value-blue="82"></span></div>
+                    </div>
+                    <div class="meter" data-meter="bite">
+                        <div class="meter-heading"><span>Citrus / Tart Bite</span><span class="meter-value">78%</span></div>
+                        <div class="meter-track"><span class="meter-fill" data-value-classic="78" data-value-blue="96"></span></div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="content-section" id="eco" aria-labelledby="eco-title">
+        <div class="eco-banner glass-panel reveal">
+            <div class="eco-intro">
+                <div>
+                    <p class="section-eyebrow">GOOD TASTE, LIGHTER FOOTPRINT</p>
+                    <h2 class="section-title" id="eco-title">Infinitely Recyclable</h2>
+                </div>
+                <p class="section-copy">A can designed to keep doing good long after the last sip. Made for circularity, with a lighter touch from top to bottom.</p>
+            </div>
+            <div class="stat-grid">
+                <article class="stat-card">
+                    <strong>100%</strong>
+                    <span>Infinitely Recyclable Aluminum</span>
+                </article>
+                <article class="stat-card">
+                    <strong>-62%</strong>
+                    <span>Lower Carbon Footprint vs. Glass</span>
+                </article>
+                <article class="stat-card">
+                    <strong>0%</strong>
+                    <span>BPA-Free Plant-Based Can Liner</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section" id="reviews" aria-labelledby="reviews-title">
+        <div class="reviews-heading">
+            <div class="section-heading reveal">
+                <p class="section-eyebrow">GOOD WORDS. ZERO GUILT.</p>
+                <h2 class="section-title" id="reviews-title">Zero-Sugar Purists</h2>
+            </div>
+            <div class="review-summary reveal">
+                <strong>4.9 / 5.0</strong>
+                <span>from 2,400+ Verified Reviews</span>
+            </div>
+        </div>
+        <div class="review-grid">
+            <article class="review-card reveal">
+                <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                <p class="review-flavor">Diet Classic</p>
+                <p class="review-quote">“That bright cherry taste is so crisp, and it doesn't leave a sugary aftertaste. It's my new afternoon ritual.”</p>
+                <p class="reviewer">Maya L. <span>· Portland, OR</span></p>
+            </article>
+            <article class="review-card reveal">
+                <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                <p class="review-flavor">Zero Lime</p>
+                <p class="review-quote">“The lime is sharp and refreshing without being too sweet. Exactly what I wanted from a zero-sugar soda.”</p>
+                <p class="reviewer">Jordan R. <span>· Austin, TX</span></p>
+            </article>
+            <article class="review-card reveal">
+                <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                <p class="review-flavor">Diet Classic</p>
+                <p class="review-quote">“Love the fine bubbles and clean finish. It feels like a treat, but fits right into my everyday routine.”</p>
+                <p class="reviewer">Sam K. <span>· Brooklyn, NY</span></p>
+            </article>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <a class="footer-brand" href="#home" aria-label="Soda home">
+                <span class="logo">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle>
+                        <path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                    </svg>
+                    <span>Soda</span>
+                </span>
+            </a>
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="#home">Home</a>
+                <a href="#ingredients">Ingredients</a>
+                <a href="#taste">Taste</a>
+                <a href="#eco">Eco</a>
+                <a href="#reviews">Reviews</a>
+            </nav>
+            <div class="footer-actions">
+                <div class="footer-flavors" aria-label="Quick flavor switcher">
+                    <button class="pill-button flavor-action" type="button" data-flavor="classic">Diet Classic</button>
+                    <button class="pill-button flavor-action" type="button" data-flavor="blue">Zero Lime</button>
+                </div>
+                <p class="copyright">© 2025 Diet Soda. Pure Zero Refreshment.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal-backdrop" id="order-modal" aria-hidden="true">
+        <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="order-modal-title" tabindex="-1">
+            <button class="modal-close" type="button" aria-label="Close order dialog">×</button>
+            <div id="order-form-view">
+                <h2 id="order-modal-title">Make it a crisp one.</h2>
+                <p class="modal-intro">Choose your flavor and pack. Good taste is just a few clicks away.</p>
+                <span class="modal-label">Choose flavor</span>
+                <div class="modal-pills" id="order-flavor-options">
+                    <button class="pill-button order-flavor" type="button" data-flavor="classic" aria-pressed="true">Diet Classic · $2.99 / can</button>
+                    <button class="pill-button order-flavor" type="button" data-flavor="blue" aria-pressed="false">Zero Lime · $2.99 / can</button>
+                </div>
+                <span class="modal-label">Pack size</span>
+                <div class="modal-pills">
+                    <label class="pack-option">
+                        <input type="radio" name="pack-size" value="6" data-price="26.99" checked>
+                        <span>6-Pack<strong>$26.99 · Save 10%</strong></span>
+                    </label>
+                    <label class="pack-option">
+                        <input type="radio" name="pack-size" value="12" data-price="28.99">
+                        <span>Variety 12-Pack<strong>$28.99</strong></span>
+                    </label>
+                </div>
+                <div class="quantity-row">
+                    <span class="modal-label" style="margin: 0;">Quantity</span>
+                    <div class="quantity-control">
+                        <button type="button" id="quantity-decrease" aria-label="Decrease quantity">−</button>
+                        <output id="order-quantity" aria-live="polite">1</output>
+                        <button type="button" id="quantity-increase" aria-label="Increase quantity">+</button>
+                    </div>
+                </div>
+                <div class="modal-total"><span>Total</span><strong id="order-total">$26.99</strong></div>
+                <button class="modal-primary" type="button" id="add-to-bag">Add to Bag</button>
+            </div>
+            <div class="confirmation-view" id="order-confirmation" hidden>
+                <h2>You're all set.</h2>
+                <p id="order-confirmation-copy"></p>
+                <button class="modal-primary" type="button" data-close-modal>Continue Exploring</button>
+            </div>
+        </section>
+    </div>
+
+    <div class="modal-backdrop" id="contact-modal" aria-hidden="true">
+        <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title" tabindex="-1">
+            <button class="modal-close" type="button" aria-label="Close contact dialog">×</button>
+            <div id="contact-form-view">
+                <h2 id="contact-modal-title">Let's talk.</h2>
+                <p class="modal-intro">Questions, wholesale, or something else? Send us a note.</p>
+                <form class="contact-form" id="contact-form" novalidate>
+                    <label for="contact-name">Full Name</label>
+                    <input id="contact-name" name="name" autocomplete="name" required>
+                    <label for="contact-email">Email Address</label>
+                    <input id="contact-email" name="email" type="email" autocomplete="email" required>
+                    <label for="contact-type">Inquiry Type</label>
+                    <select id="contact-type" name="type">
+                        <option>General Support</option>
+                        <option>Retail &amp; Wholesale</option>
+                        <option>Press &amp; Events</option>
+                    </select>
+                    <label for="contact-message">Message</label>
+                    <textarea id="contact-message" name="message" required></textarea>
+                    <p class="form-error" id="contact-error" aria-live="polite"></p>
+                    <button class="modal-primary" type="submit">Send Message</button>
+                </form>
+            </div>
+            <div class="confirmation-view" id="contact-confirmation" hidden>
+                <h2>Thanks for reaching out.</h2>
+                <p id="contact-confirmation-copy"></p>
+                <button class="modal-primary" type="button" id="contact-reset">Send another message</button>
+            </div>
+        </section>
+    </div>
+
+    <svg aria-hidden="true" style="position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none;">
+        <filter id="frosted">
+            <feTurbulence type="fractalNoise" baseFrequency="0.0125" numOctaves="3" result="noise"></feTurbulence>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="80" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+        </filter>
+    </svg>
+    <div style="display: none;" aria-hidden="true">
+        <model-viewer src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/blueberry.glb"></model-viewer>
+        <model-viewer src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb"></model-viewer>
+    </div>
+
+    <script>
+        const modelViewer = document.querySelector('#product-model');
+        const berriesFG = document.querySelector('.berries-container');
+        const berriesBG = document.querySelector('.berries-container-bg');
+        const leavesBG = document.querySelector('.leaves-container');
+        const allBerries = document.querySelectorAll('.berry');
+        const cards = document.querySelectorAll('.card');
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let isSwitching = false;
+        let switchSpin = 0;
+        let currentFlavor = 'classic';
+        let blueTexture = null;
+        let greenTexture = null;
+        let hasMouseMoved = false;
+
+        function updateFlavorPresentation(flavor, animateMeters = true) {
+            currentFlavor = flavor;
+            const isBlue = flavor === 'blue';
+            const ingredientName = document.getElementById('active-flavor-extract');
+            const flavorName = document.getElementById('taste-flavor-name');
+            const flavorCopy = document.getElementById('taste-flavor-copy');
+            const tasteButton = document.querySelector('#taste .flavor-action');
+            const nextFlavor = isBlue ? 'classic' : 'blue';
+
+            ingredientName.textContent = isBlue ? 'Cold-Pressed Key Lime' : 'Wild Cherry Essence';
+            flavorName.textContent = isBlue ? 'Zero Lime' : 'Diet Classic';
+            flavorCopy.textContent = isBlue
+                ? 'Cold-pressed key lime brings a bright citrus snap, backed by fine sparkling bubbles and a clean, zesty finish.'
+                : 'Wild cherry leads with a juicy lift, followed by fine sparkling bubbles and a clean, lightly tart finish.';
+            tasteButton.dataset.flavor = nextFlavor;
+            tasteButton.textContent = isBlue ? 'Switch to Diet Classic' : 'Switch to Zero Lime';
+
+            cards.forEach(card => {
+                const active = card.dataset.flavor === flavor;
+                card.classList.toggle('active', active);
+                card.setAttribute('aria-pressed', String(active));
+            });
+
+            document.querySelectorAll('.order-flavor, .footer-flavors .flavor-action').forEach(button => {
+                button.setAttribute('aria-pressed', String(button.dataset.flavor === flavor));
+            });
+
+            document.querySelectorAll('.meter-fill').forEach(fill => {
+                const value = Number(fill.dataset[isBlue ? 'valueBlue' : 'valueClassic']);
+                const valueLabel = fill.closest('.meter').querySelector('.meter-value');
+                valueLabel.textContent = `${value}%`;
+                if (animateMeters && !prefersReducedMotion && window.gsap) {
+                    gsap.to(fill, { width: `${value}%`, duration: 0.8, ease: 'power2.out' });
+                } else {
+                    fill.style.width = `${value}%`;
+                }
+            });
+
+            syncOrderTotal();
+        }
+
+        function selectFlavor(flavor) {
+            if (isSwitching || flavor === currentFlavor) return;
+            switchFlavor(flavor);
+        }
+
+        modelViewer.addEventListener('load', async () => {
+            try {
+                blueTexture = await modelViewer.createTexture('https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/blue%20base%20color.jpg');
+                greenTexture = await modelViewer.createTexture('https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/green%20base%20color.jpg');
+
+                if (modelViewer.model) {
+                    const material = modelViewer.model.materials[0];
+                    if (material && material.pbrMetallicRoughness.baseColorTexture) {
+                        material.pbrMetallicRoughness.baseColorTexture.setTexture(blueTexture);
+                        await new Promise(r => requestAnimationFrame(r));
+                        material.pbrMetallicRoughness.baseColorTexture.setTexture(greenTexture);
+                    }
+                }
+            } catch (e) { console.error("Texture preload failed", e); }
+        });
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                selectFlavor(card.dataset.flavor);
+            });
+            card.addEventListener('keydown', event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    card.click();
+                }
+            });
+        });
+
+        document.querySelectorAll('.nav-arrow').forEach(button => {
+            button.addEventListener('click', () => {
+                selectFlavor(currentFlavor === 'classic' ? 'blue' : 'classic');
+            });
+        });
+
+        document.querySelectorAll('.flavor-action').forEach(button => {
+            button.addEventListener('click', () => selectFlavor(button.dataset.flavor));
+        });
+
+        async function switchFlavor(flavor) {
+            if (isSwitching) return;
+            isSwitching = true;
+            updateFlavorPresentation(flavor);
+            const body = document.body;
+            const berries = document.querySelectorAll('.berry');
+            const heroCenter = document.querySelector('.hero-center');
+
+            const targetColors = flavor === 'blue' ?
+                { inner: '#0b4f8a', mid: '#04294e', outer: '#010c14' } :
+                { inner: '#0b8a78', mid: '#044e3b', outer: '#011411' };
+
+            gsap.to(body, {
+                '--bg-inner': targetColors.inner,
+                '--bg-mid': targetColors.mid,
+                '--bg-outer': targetColors.outer,
+                duration: 1.5,
+                ease: 'power2.inOut'
+            });
+
+            const spinObj = { val: 0, blur: 0 };
+            gsap.to(spinObj, {
+                val: 360,
+                blur: 15,
+                duration: 0.6,
+                ease: "power2.in",
+                onUpdate: () => {
+                    switchSpin = spinObj.val;
+                    modelViewer.style.filter = `blur(${spinObj.blur}px)`;
+                },
+                onComplete: async () => {
+                    if (flavor === 'blue') {
+                        body.classList.add('blue-theme');
+                        if (modelViewer.model && blueTexture) {
+                            modelViewer.model.materials.forEach(material => {
+                                if (material.pbrMetallicRoughness.baseColorTexture) {
+                                    material.pbrMetallicRoughness.baseColorTexture.setTexture(blueTexture);
+                                }
+                            });
+                        }
+                    } else {
+                        body.classList.remove('blue-theme');
+                        if (modelViewer.model && greenTexture) {
+                            modelViewer.model.materials.forEach(material => {
+                                if (material.pbrMetallicRoughness.baseColorTexture) {
+                                    material.pbrMetallicRoughness.baseColorTexture.setTexture(greenTexture);
+                                }
+                            });
+                        }
+                    }
+
+                    gsap.to(spinObj, {
+                        val: 720,
+                        blur: 0,
+                        duration: 1.5,
+                        ease: "back.out(0.7)",
+                        onUpdate: () => {
+                            switchSpin = spinObj.val;
+                            modelViewer.style.filter = `blur(${spinObj.blur}px)`;
+                        },
+                        onComplete: () => {
+                            switchSpin = 0;
+                            modelViewer.style.filter = 'none';
+                        }
+                    });
+                }
+            });
+
+            let completedBerries = 0;
+            berries.forEach((berry, i) => {
+                const bW = berry.offsetWidth / 2;
+                const bH = berry.offsetHeight / 2;
+                const centerX = (window.innerWidth / 2 - berry.offsetLeft - bW);
+                const centerY = (window.innerHeight / 2 - berry.offsetTop - bH);
+
+                const startAngle = parseFloat(berry.dataset.angle) || 0;
+                const currentBaseX = parseFloat(berry.dataset.baseX) || 0;
+                const currentBaseY = parseFloat(berry.dataset.baseY) || 0;
+                const nextBaseX = (Math.random() - 0.5) * 200;
+                const nextBaseY = (Math.random() - 0.5) * 200;
+
+                gsap.set(berry, {
+                    rotation: startAngle,
+                    x: currentBaseX,
+                    y: currentBaseY
+                });
+
+                const berryTl = gsap.timeline();
+
+                berryTl.to(berry, {
+                    x: centerX,
+                    y: centerY,
+                    rotation: startAngle + 45,
+                    scale: 0.1,
+                    opacity: 0,
+                    duration: 0.5,
+                    ease: "power2.in",
+                    onComplete: () => {
+                        berry.src = flavor === 'blue' ? 'https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/blueberry.glb' : 'https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb';
+                        heroCenter.style.zIndex = 50;
+                    }
+                })
+                .to(berry, {
+                    duration: 0.3
+                })
+                .to(berry, {
+                    onStart: () => {
+                        heroCenter.style.zIndex = 1;
+                    },
+                    x: nextBaseX,
+                    y: nextBaseY,
+                    rotation: startAngle + 90,
+                    scale: 1,
+                    opacity: 1,
+                    duration: 0.9,
+                    ease: "back.out(1.5)",
+                    onComplete: () => {
+                        berry.dataset.angle = startAngle + 90;
+                        berry.dataset.baseX = nextBaseX;
+                        berry.dataset.baseY = nextBaseY;
+                        berry.dataset.rx = 0;
+                        berry.dataset.ry = 0;
+
+                        completedBerries++;
+                        if (completedBerries === berries.length) {
+                            isSwitching = false;
+                        }
+                    }
+                });
+            });
+        }
+
+        const orderModal = document.getElementById('order-modal');
+        const contactModal = document.getElementById('contact-modal');
+        let activeModal = null;
+        let lastFocusedElement = null;
+        let previousHtmlOverflow = '';
+        let previousBodyOverflow = '';
+        let orderQuantity = 1;
+
+        function syncOrderTotal() {
+            const selectedPack = document.querySelector('input[name="pack-size"]:checked');
+            const price = selectedPack ? Number(selectedPack.dataset.price) : 26.99;
+            document.getElementById('order-quantity').textContent = String(orderQuantity);
+            document.getElementById('order-total').textContent = `$${(price * orderQuantity).toFixed(2)}`;
+        }
+
+        function openModal(modal) {
+            if (activeModal) closeModal();
+            lastFocusedElement = document.activeElement;
+            activeModal = modal;
+            previousHtmlOverflow = document.documentElement.style.overflow;
+            previousBodyOverflow = document.body.style.overflow;
+            document.documentElement.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden';
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            requestAnimationFrame(() => {
+                const dialog = modal.querySelector('[role="dialog"]');
+                const firstControl = dialog.querySelector('button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled)');
+                (firstControl || dialog).focus();
+            });
+        }
+
+        function closeModal() {
+            if (!activeModal) return;
+            const modal = activeModal;
+            activeModal = null;
+            modal.classList.remove('is-open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.documentElement.style.overflow = previousHtmlOverflow;
+            document.body.style.overflow = previousBodyOverflow;
+            if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+                lastFocusedElement.focus();
+            }
+        }
+
+        document.querySelectorAll('[data-open-modal]').forEach(button => {
+            button.addEventListener('click', () => {
+                const modal = document.getElementById(button.dataset.openModal);
+                if (modal === orderModal) {
+                    document.getElementById('order-form-view').hidden = false;
+                    document.getElementById('order-confirmation').hidden = true;
+                    orderQuantity = 1;
+                    document.querySelector(`.order-flavor[data-flavor="${currentFlavor}"]`).setAttribute('aria-pressed', 'true');
+                    document.querySelectorAll('.order-flavor').forEach(flavorButton => {
+                        flavorButton.classList.toggle('active', flavorButton.dataset.flavor === currentFlavor);
+                        flavorButton.setAttribute('aria-pressed', String(flavorButton.dataset.flavor === currentFlavor));
+                    });
+                    syncOrderTotal();
+                }
+                if (modal === contactModal) {
+                    document.getElementById('contact-form-view').hidden = false;
+                    document.getElementById('contact-confirmation').hidden = true;
+                    document.getElementById('contact-error').textContent = '';
+                }
+                openModal(modal);
+            });
+        });
+
+        document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+            backdrop.addEventListener('click', event => {
+                if (event.target === backdrop) closeModal();
+            });
+            backdrop.querySelector('.modal-close').addEventListener('click', closeModal);
+        });
+
+        document.querySelectorAll('[data-close-modal]').forEach(button => {
+            button.addEventListener('click', closeModal);
+        });
+
+        document.addEventListener('keydown', event => {
+            if (!activeModal) return;
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                closeModal();
+                return;
+            }
+            if (event.key !== 'Tab') return;
+
+            const focusable = [...activeModal.querySelectorAll('button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])')]
+                .filter(element => !element.closest('[hidden]'));
+            if (!focusable.length) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first.focus();
+            }
+        });
+
+        document.querySelectorAll('.order-flavor').forEach(button => {
+            button.addEventListener('click', () => {
+                if (isSwitching) return;
+                document.querySelectorAll('.order-flavor').forEach(option => {
+                    const selected = option === button;
+                    option.classList.toggle('active', selected);
+                    option.setAttribute('aria-pressed', String(selected));
+                });
+                selectFlavor(button.dataset.flavor);
+            });
+        });
+
+        document.querySelectorAll('input[name="pack-size"]').forEach(input => {
+            input.addEventListener('change', syncOrderTotal);
+        });
+        document.getElementById('quantity-decrease').addEventListener('click', () => {
+            orderQuantity = Math.max(1, orderQuantity - 1);
+            syncOrderTotal();
+        });
+        document.getElementById('quantity-increase').addEventListener('click', () => {
+            orderQuantity = Math.min(99, orderQuantity + 1);
+            syncOrderTotal();
+        });
+
+        document.getElementById('add-to-bag').addEventListener('click', () => {
+            const flavorName = currentFlavor === 'blue' ? 'Zero Lime' : 'Diet Classic';
+            const pack = document.querySelector('input[name="pack-size"]:checked');
+            const packName = pack.value === '6' ? '6-Pack' : 'Variety 12-Pack';
+            document.getElementById('order-confirmation-copy').textContent =
+                `${orderQuantity} ${packName}${orderQuantity === 1 ? '' : 's'} of ${flavorName} — ${document.getElementById('order-total').textContent} total.`;
+            document.getElementById('order-form-view').hidden = true;
+            document.getElementById('order-confirmation').hidden = false;
+            document.querySelector('#order-confirmation [data-close-modal]').focus();
+        });
+
+        const contactForm = document.getElementById('contact-form');
+        contactForm.addEventListener('submit', event => {
+            event.preventDefault();
+            const name = document.getElementById('contact-name');
+            const email = document.getElementById('contact-email');
+            const message = document.getElementById('contact-message');
+            const error = document.getElementById('contact-error');
+            const invalidField = [name, email, message].find(field => !field.value.trim() || !field.checkValidity());
+            if (invalidField) {
+                error.textContent = !invalidField.value.trim()
+                    ? 'Please complete all required fields.'
+                    : 'Please enter a valid email address.';
+                invalidField.focus();
+                return;
+            }
+
+            document.getElementById('contact-confirmation-copy').textContent =
+                `Thanks, ${name.value.trim()} — we'll reply within 24 hours.`;
+            document.getElementById('contact-form-view').hidden = true;
+            document.getElementById('contact-confirmation').hidden = false;
+            document.getElementById('contact-reset').focus();
+        });
+
+        document.getElementById('contact-reset').addEventListener('click', () => {
+            contactForm.reset();
+            document.getElementById('contact-error').textContent = '';
+            document.getElementById('contact-confirmation').hidden = true;
+            document.getElementById('contact-form-view').hidden = false;
+            document.getElementById('contact-name').focus();
+        });
+
+        document.querySelector('.header').classList.toggle('scrolled', window.scrollY > 40);
+        window.addEventListener('scroll', () => {
+            document.querySelector('.header').classList.toggle('scrolled', window.scrollY > 40);
+        }, { passive: true });
+
+        const navItems = document.querySelectorAll('.nav-item');
+        const observedSections = [...document.querySelectorAll('#home, #ingredients, #taste, #eco, #reviews')];
+        function updateScrollSpy() {
+            const marker = Math.min(150, window.innerHeight * 0.28);
+            const activeSection = observedSections.findLast
+                ? observedSections.findLast(section => {
+                    const rect = section.getBoundingClientRect();
+                    return rect.top <= marker && rect.bottom > marker;
+                })
+                : [...observedSections].reverse().find(section => {
+                    const rect = section.getBoundingClientRect();
+                    return rect.top <= marker && rect.bottom > marker;
+                });
+            if (!activeSection) return;
+            navItems.forEach(item => {
+                const active = item.getAttribute('href') === `#${activeSection.id}`;
+                item.classList.toggle('active', active);
+                if (active) item.setAttribute('aria-current', 'location');
+                else item.removeAttribute('aria-current');
+            });
+        }
+        const navObserver = new IntersectionObserver(updateScrollSpy, { threshold: [0, 0.1, 0.25, 0.5] });
+        observedSections.forEach(section => navObserver.observe(section));
+        window.addEventListener('scroll', updateScrollSpy, { passive: true });
+        updateScrollSpy();
+
+        updateFlavorPresentation('classic', false);
+        if (!prefersReducedMotion && window.gsap && window.ScrollTrigger) {
+            gsap.registerPlugin(ScrollTrigger);
+            gsap.utils.toArray('.reveal').forEach(element => {
+                gsap.fromTo(element, { autoAlpha: 0, y: 28 }, {
+                    autoAlpha: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power2.out',
+                    scrollTrigger: { trigger: element, start: 'top 88%', once: true }
+                });
+            });
+        }
+
+        allBerries.forEach(b => {
+            b.dataset.rx = 0; b.dataset.ry = 0; b.dataset.angle = Math.random() * 360;
+            b.dataset.baseX = 0; b.dataset.baseY = 0;
+            b.dataset.targetRx = 0; b.dataset.targetRy = 0;
+        });
+
+        let mouse = { x: 0, y: 0, px: 0, py: 0 };
+        let currentMouse = { x: 0, y: 0 };
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = (e.clientX / window.innerWidth) - 0.5;
+            mouse.y = (e.clientY / window.innerHeight) - 0.5;
+            mouse.px = e.clientX;
+            mouse.py = e.clientY;
+            hasMouseMoved = true;
+        });
+
+        function animate() {
+            const time = Date.now() * 0.001;
+            currentMouse.x += (mouse.x - currentMouse.x) * 0.05;
+            currentMouse.y += (mouse.y - currentMouse.y) * 0.05;
+            modelViewer.cameraOrbit = `${(currentMouse.x * 40) + switchSpin}deg ${90 + (currentMouse.y * 20)}deg 380%`;
+            berriesFG.style.transform = `translate(${currentMouse.x * 60}px, ${currentMouse.y * 60}px)`;
+            berriesBG.style.transform = `translate(${currentMouse.x * -30}px, ${currentMouse.y * -30}px)`;
+            leavesBG.style.transform = `translate(${currentMouse.x * -15}px, ${currentMouse.y * -15}px)`;
+
+            if (!isSwitching) {
+                allBerries.forEach((berry, i) => {
+                    const berryRect = berry.getBoundingClientRect();
+                    const berryX = berryRect.left + berryRect.width / 2;
+                    const berryY = berryRect.top + berryRect.height / 2;
+
+                    const diffX = mouse.px - berryX;
+                    const diffY = mouse.py - berryY;
+                    const distance = Math.sqrt(diffX * diffX + diffY * diffY);
+                    let targetRx = 0, targetRy = 0, speedMult = 1;
+
+                    if (hasMouseMoved && distance > 0.1 && distance < 400) {
+                        const force = (400 - distance) / 400;
+                        targetRx = (diffX / distance) * force * -80;
+                        targetRy = (diffY / distance) * force * -80;
+                        speedMult = 1 + force * 5;
+                    }
+
+                    let rx = parseFloat(berry.dataset.rx) || 0;
+                    let ry = parseFloat(berry.dataset.ry) || 0;
+                    let angle = parseFloat(berry.dataset.angle) || 0;
+                    let baseX = parseFloat(berry.dataset.baseX) || 0;
+                    let baseY = parseFloat(berry.dataset.baseY) || 0;
+
+                    rx += (targetRx - rx) * 0.1;
+                    ry += (targetRy - ry) * 0.1;
+                    if (!prefersReducedMotion) angle += 0.2 * speedMult;
+
+                    berry.dataset.rx = rx;
+                    berry.dataset.ry = ry;
+                    berry.dataset.angle = angle;
+
+                    const dur = [5, 7, 6, 8, 5.5, 6.5, 9, 11, 10][i % 9];
+                    const phase = (time + i * 0.7) * (Math.PI * 2 / dur);
+                    const floatY = prefersReducedMotion ? 0 : Math.sin(phase) * 15;
+                    const floatAngle = prefersReducedMotion ? 0 : Math.cos(phase) * 6;
+
+                    berry.style.transform = `translate(calc(${rx + baseX}px), calc(${ry + baseY}px + ${floatY}px)) rotate(calc(${angle}deg + ${floatAngle}deg))`;
+                });
+            }
+
+            if (!prefersReducedMotion) {
+                document.querySelectorAll('.leaf').forEach((leaf, i) => {
+                    const dur = 10 + i * 2;
+                    const phase = (time + i * 1.2) * (Math.PI * 2 / dur);
+                    const floatY = Math.sin(phase) * 20;
+                    const floatX = Math.cos(phase * 0.5) * 15;
+                    const floatAngle = Math.sin(phase * 0.3) * 15;
+                    leaf.style.transform = `translate(${floatX}px, ${floatY}px) rotate(${floatAngle}deg)`;
+                });
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        const bubblesContainer = document.getElementById('bubbles-container');
+        function createBubble() {
+            if (!bubblesContainer) return;
+            const bubble = document.createElement('img');
+            bubble.src = 'https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/bubble.png';
+            bubble.className = 'bubble-img';
+            const size = Math.random() * 20 + 10 + 'px';
+            bubble.style.width = size;
+            bubble.style.height = 'auto';
+            bubble.style.left = Math.random() * 100 + '%';
+            bubble.style.bottom = '-50px';
+            bubble.style.opacity = Math.random() * 0.4 + 0.2;
+
+            const duration = Math.random() * 6 + 4;
+            bubble.style.animation = `floatUpImg ${duration}s linear forwards`;
+
+            bubblesContainer.appendChild(bubble);
+            setTimeout(() => bubble.remove(), duration * 1000);
+        }
+        if (!prefersReducedMotion) setInterval(createBubble, 400);
+    </script>
+</body>
+</html>
