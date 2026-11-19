@@ -4,6 +4,15 @@ A product landing page for a zero-sugar soda. A 3D can floats in the middle of t
 
 Built by AI from a prompt found online. Copy it, open it, or paste it into your own AI and make it yours, with no need to build it from scratch.
 
+---
+## Website details
+| Field | Details |
+|---|---|
+| Website name | Diet Soda |
+| Website link | https://helpful-brigadeiros-799aeb.netlify.app |
+| GitHub Repository | https://github.com/Elliott7710/diet-soda |
+---
+
 ## Features
 
 - Interactive 3D can (drag to rotate) with floating 3D cherries and leaves
